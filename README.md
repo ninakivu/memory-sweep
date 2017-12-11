@@ -30,7 +30,7 @@ Memory Sweep was build by using HTML, CSS, JavaScript and the jQuery library.
 
 ### MVP:
 - grid with 5x5 clickable squares
-- random squares get highlighted after player clicks Start button
+- random 7 squares get highlighted after player clicks Start button
 - each player's score is stored & shown on the scoreboard 
 - timer from 60 seconds to 0
 - comparison between the scores determine the winner
