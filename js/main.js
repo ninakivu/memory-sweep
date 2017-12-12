@@ -1,15 +1,15 @@
 var $grid = $('#grid')
-var $topRow = $('#top-row')
-var $form = $('#form')
-var $playerName = $('#player-name')
 var $name = $('#name')
+var $playerName = $('#player-name')
+var $form = $('#form')
+var $topRow = $('#top-row')
 
 //generate 25 squares:
 for (var i = 0; i < 25; i += 1) {
-    $grid.append('<div class=square id=' +i+ '></square>')
+    $grid.append('<div class="square" id=' +i+ '></square>')
 }
 
-//create $topRow: clicks/score
+//create $topRow: clicks/score/start
 $topRow.append('<div class="row" id="clicks">Clicks: </div>')
 $topRow.append('<div class="row" id="score">Score: </div>')
 $topRow.append('<div class="row" id="start">Start!</div>')
@@ -37,25 +37,41 @@ while (winningSquares.length < 7 ) {
     winningSquares[winningSquares.length] = randomNum;
 }
 
+var $score = (".score")
+var $clicks = (".clicks")
+
 //show 7 randomly highlighted squares on Start:
 $start.on('click', function(){
     for(var i = 0; i < winningSquares.length; i += 1) {
         $squares.eq(winningSquares[i]).addClass('blue')
     }
+    //change color to blue for 3 seconds:
+    setTimeout(function(){
+        for(var i = 0; i < winningSquares.length; i += 1) {
+            $squares.eq(winningSquares[i]).addClass('white')
+        }
+    }, 3000)
+    //check if the player clicked on the right square
+    $grid.on('click', '.square', function(){
+        if ($(this).hasClass('blue')){
+            console.log("You got it")
+            $(this).removeClass('white')
+            // var score = +1
+            // $score.val("$score + 1")
+            //increase score
+        }
+        else {
+            //$(this).css("backgroundColor", "white")
+            console.log("Nope")
+            // $score.val("$score - 1")
+            //decrease score
+        }
+    })
 })
 
-//hide the blue squares after 3sec:
 
 
 
-//create an EL for the squares
-$grid.on('click', '.square', function(){
-    console.log("I'm clickable")
-    
-    //check if the id is in the winning squares
-
-    //remember that the id of html element is string
-})
 
 
 

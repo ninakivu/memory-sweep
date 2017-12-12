@@ -9,22 +9,22 @@
     src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
     crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <title>Memory Sweep</title>
 </head>
 <body>
-    <div id="logo">Memory Game Logo</div>
+    <div id="logo"> <img src="./memory-sweep-logo.png" alt="Memory Sweep" srcset="" height="150px"></div>
     <div>
         <p id="name"></p>
         <form id="form" action="input">
             <input id="player-name" type="text" placeholder="Player Name">
         </form>
-        
     </div>
-    
     <h2 id="player-name"></h2>
     <div id="top-row"></div>
-    <div id="instructions"></div>
+    <div id="instructions">Memorize the highlighted tiles. Remember their positions when gone.</div>
     <div id="grid"></div>
 
     <script src="./js/main.js"></script>
