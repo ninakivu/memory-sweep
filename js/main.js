@@ -1,10 +1,8 @@
 var $grid = $('#grid')
-var $squares = $('.square')
 var $topRow = $('#top-row')
 var $form = $('#form')
 var $playerName = $('#player-name')
 var $name = $('#name')
-var $start = $('#start')
 
 //generate 25 squares:
 for (var i = 0; i < 25; i += 1) {
@@ -12,9 +10,12 @@ for (var i = 0; i < 25; i += 1) {
 }
 
 //create $topRow: clicks/score
-$topRow.append('<div class=row id=clicks>Clicks: </div>')
-$topRow.append('<div class=row id=score>Score: </div>')
-$topRow.append('<div class=row id=start>Start!</div>')
+$topRow.append('<div class="row" id="clicks">Clicks: </div>')
+$topRow.append('<div class="row" id="score">Score: </div>')
+$topRow.append('<div class="row" id="start">Start!</div>')
+
+var $squares = $('.square')
+var $start = $('#start')
 
 //add player name line after he inputs his name:
 $form.on('submit', function(evt){
@@ -37,10 +38,14 @@ while (winningSquares.length < 7 ) {
 }
 
 //show 7 randomly highlighted squares on Start:
-$topRow.on('click', '#start', function(){
-    winningSquares.addClass('blue')
-    this.text("X")
-} )
+$start.on('click', function(){
+    for(var i = 0; i < winningSquares.length; i += 1) {
+        $squares.eq(winningSquares[i]).addClass('blue')
+    }
+})
+
+//hide the blue squares after 3sec:
+
 
 
 //create an EL for the squares
