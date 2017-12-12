@@ -9,11 +9,7 @@ for (var i = 0; i < 25; i += 1) {
     $grid.append('<div class="square" id=' +i+ '></square>')
 }
 
-var c = 7
-var s = 0
-//create $topRow: clicks/score/start
-$topRow.append('<div class="row" id="clicks">Clicks: ' + c + '</div>')
-$topRow.append('<div class="row" id="score">Score: ' + s + '</div>')
+//appends start button
 $topRow.append('<div class="row" id="start">Start!</div>')
 
 var $squares = $('.square')
@@ -39,8 +35,11 @@ while (winningSquares.length < 7 ) {
     winningSquares[winningSquares.length] = randomNum;
 }
 
-var $score = (".score")
-var $clicks = (".clicks")
+var $score = $("#score")
+var $clicks = $("#clicks")
+
+$score.text(0)
+$clicks.text(7)
 
 //show 7 randomly highlighted squares on Start:
 $start.on('click', function(){
@@ -53,25 +52,23 @@ $start.on('click', function(){
             $squares.eq(winningSquares[i]).addClass('white')
         }
         $('#instructions').text('Good Luck!')
+
+        //+/- score and clicks accordingly
+        $grid.on('click', '.square', function(){
+            // while ($clicks.text() > - 1) {
+            // }
+            $clicks.text(Number($clicks.text()) - 1)
+            if ($(this).hasClass('blue')){
+                console.log("You got it")
+                $(this).removeClass('white')
+                $score.text(Number($score.text()) + 1)
+            }
+            else {
+                console.log("Nope")
+                $score.text(Number($score.text()) - 1)
+            }
+        })
     }, 3000)
-    
-    //+/- score and clicks accordingly
-    $grid.on('click', '.square', function(){
-        c = c - 1
-        if ($(this).hasClass('blue')){
-            console.log("You got it")
-            $(this).removeClass('white')
-            s = s + 1
-            // $score.text('"$score.text" + 1')
-            //increase score
-        }
-        else {
-            console.log("Nope")
-            s = s + 1
-            // $score.val() = '"$score.text" - 1'
-            //decrease score
-        }
-    })
 })
 
 
