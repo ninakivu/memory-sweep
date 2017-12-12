@@ -1,6 +1,6 @@
-![image - logo of the game] (./logo.png)
+![image - logo of the game] (./memory-sweep-logo.png)
 
-#Memory Sweep:
+
 ##Train your brain, improve your working memory & get smarter each day!
 
 ![screenshot] (./screenshot.png)

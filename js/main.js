@@ -9,9 +9,11 @@ for (var i = 0; i < 25; i += 1) {
     $grid.append('<div class="square" id=' +i+ '></square>')
 }
 
+var c = 7
+var s = 0
 //create $topRow: clicks/score/start
-$topRow.append('<div class="row" id="clicks">Clicks: </div>')
-$topRow.append('<div class="row" id="score">Score: </div>')
+$topRow.append('<div class="row" id="clicks">Clicks: ' + c + '</div>')
+$topRow.append('<div class="row" id="score">Score: ' + s + '</div>')
 $topRow.append('<div class="row" id="start">Start!</div>')
 
 var $squares = $('.square')
@@ -50,20 +52,23 @@ $start.on('click', function(){
         for(var i = 0; i < winningSquares.length; i += 1) {
             $squares.eq(winningSquares[i]).addClass('white')
         }
+        $('#instructions').text('Good Luck!')
     }, 3000)
-    //check if the player clicked on the right square
+    
+    //+/- score and clicks accordingly
     $grid.on('click', '.square', function(){
+        c = c - 1
         if ($(this).hasClass('blue')){
             console.log("You got it")
             $(this).removeClass('white')
-            // var score = +1
-            // $score.val("$score + 1")
+            s = s + 1
+            // $score.text('"$score.text" + 1')
             //increase score
         }
         else {
-            //$(this).css("backgroundColor", "white")
             console.log("Nope")
-            // $score.val("$score - 1")
+            s = s + 1
+            // $score.val() = '"$score.text" - 1'
             //decrease score
         }
     })
