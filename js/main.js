@@ -11,6 +11,11 @@ var players = {
     player2: {name: '', score: 0}
 }
 
+var game = {
+    currentPlayer: players.player1,
+    gameOver: false
+}
+
 //generate 25 squares:
 for (var i = 0; i < 25; i += 1) {
     $grid.append('<div class="square" id=' +i+ '></square>')
@@ -44,20 +49,15 @@ var $clicks = $("#clicks")
 $score.text(0)
 $clicks.text(7)
 
+//show player name after he inputs his name
 $form.on('submit', function(evt){
     evt.preventDefault()
     $name.text($playerName.val())
-    if (players.player1.name !== '') {
-        players.player2.name = $playerName.val()
-    } else {
-        players.player1.name = $playerName.val()
-    }
+    game.currentPlayer.name = $playerName.val()
     $form.hide()
 })
 //turn 7 random squares blue on Start:
 function initializeGame() {
-    //show player name after he inputs his name:
-    // $playerName.val('').focus()
     //Alert if no name is entered
     if ($playerName.val() === "") { 
         $('#instructions').text('Please submit your name!')
@@ -85,23 +85,18 @@ function initializeGame() {
                 if(clicksRemaining()) {
                     $clicks.text(Number($clicks.text()) - 1)
                     if ($(this).hasClass('blue')){
-                        console.log("You got it")
                         $(this).removeClass('white')
                         $score.text(Number($score.text()) + 1)
-                        if (players.player1.score !== 0) {
-                            players.player2.score = players.player2.score + 1
-                        } else {
-                            players.player1.score = players.player1.score + 1
-                        }
+                        game.currentPlayer.score++
                     }
                     else {
-                        console.log("Nope")
                         $(this).addClass('black')
                         $score.text(Number($score.text()) - 1)
-                        players.player1.score = players.player1.score + 1
+                        game.currentPlayer.score--
                     }
                 //Game Over, Next Player:
-                } else if (players.player2.score === 0){
+                } else if (game.currentPlayer !== players.player2){
+                    game.currentPlayer = players.player2
                     $grid.off('click', '.square')
                     $('#instructions').html('Good job ' + $name.text() + '! Your score is ' + $score.text() + '. '+'<br />' + 'Next Player!')
                     $scoreBoard.append($name.text() + ': ' + $score.text() + '<br/>')
@@ -113,16 +108,20 @@ function initializeGame() {
                     $start.removeClass('gray')
                     $start.one('click', initializeGame)
                 }
+                //GAME OVER:
                 else {
+                    $scoreBoard.append($name.text() + ': ' + $score.text() + '<br/>')
+                    $name.hide()
                     $grid.off('click', '.square')
-                    if (players.player1.score > players.player2.score) {
-                        $('#instructions').html('Woohoo ' + players.player2.name + ' YOU WON!')
+                    $('#instructions').html('')
+                    if (game.currentPlayer.score > players.player1.score) {
+                        $name.show().html('Woohoo ' + game.currentPlayer.name + ', You are smarter!')
                     }
-                    else if (players.player1.score === players.player2.score) {
-                        $('#instructions').html('Woohoo ' + players.player2.name + ' & ' + players.player1.name + ' you are equally smart!')
+                    else if (players.player1.score === game.currentPlayer.score) {
+                        $name.show().html('Woohoo ' + game.currentPlayer.name + ' & ' + players.player1.name + ' you are equally smart!')
                     }
                     else {
-                        $('#instructions').html('Woohoo ' + players.player1.name + ' YOU WON!')
+                        $name.show().html('Woohoo ' + players.player1.name + ', You are smarter!')
                     }
                 }
             })
