@@ -39,13 +39,11 @@ function genWinningSquares() {
         if (arr.indexOf(randomNum) > -1) continue;
         arr[arr.length] = randomNum;
     }
-
     return arr
 }
 
 var $score = $("#score")
 var $clicks = $("#clicks")
-var counter = 0
 
 $score.text(0)
 $clicks.text(7)
@@ -78,18 +76,20 @@ function initializeGame() {
                     $(this).addClass('black')
                     $score.text(Number($score.text()) - 1)
                 }
-            //end of Player1's turn
+            //Game Over, Next Player:
             } else {
                 $('.square').off()
                 $('#instructions').text('Good job ' + $name.text() + '! Your score is ' + $score.text() + '. \n Next Player!')
-                $('#score-board').append($name.text() + ': ' + $score.text())
+                $('#score-board').append($name.text() + ': ' + $score.text() + ' ')
                 $form.show()
                 $('#player-name').val('').focus()
                 $('.square').removeClass('blue').removeClass('black')
                 $start.one('click', initializeGame)
+                $score.text(0)
+                $clicks.text(7)
             }
         })
-    }, 2000)
+    }, 1500)
 }
 
 $start.one('click', initializeGame)
@@ -97,26 +97,4 @@ $start.one('click', initializeGame)
 function clicksRemaining() {
     return Boolean(Number($clicks.text()))
 }
-
-// clicksLeft = 7
-
-// boxClickHandler () {
-//     while clicksLeft > 0
-//         if clicked box is one of the random ones {
-//             box is blue
-//             score +1
-//         } else {
-//             box is black
-//         }
-//     }
-//     player 1 score = score
-// }
-
-
-// add event listeners ('click', boxClickHandler) {
-
-// }
-
-
-
 
