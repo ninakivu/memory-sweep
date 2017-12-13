@@ -64,6 +64,9 @@ input {
 .blue {
     background-color: #60b0f4;
 }
+.black {
+    background-color: black;
+}
 .white {
     background-color: white;
 }

@@ -3,6 +3,7 @@ var $name = $('#name')
 var $playerName = $('#player-name')
 var $form = $('#form')
 var $topRow = $('#top-row')
+var winningSquares;
 
 //generate 25 squares:
 for (var i = 0; i < 25; i += 1) {
@@ -29,11 +30,17 @@ function randomInt(hi){
 }
 
 //generate an array with 7 unique random numbers:
-var winningSquares = [] 
-while (winningSquares.length < 7 ) {
-    var randomNum = randomInt(25)
-    if (winningSquares.indexOf(randomNum) > -1) continue;
-    winningSquares[winningSquares.length] = randomNum;
+
+
+function genWinningSquares() {
+    var arr = [] 
+    while (arr.length < 7 ) {
+        var randomNum = randomInt(25)
+        if (arr.indexOf(randomNum) > -1) continue;
+        arr[arr.length] = randomNum;
+    }
+
+    return arr
 }
 
 var $score = $("#score")
@@ -44,7 +51,9 @@ $score.text(0)
 $clicks.text(7)
 
 //show 7 randomly highlighted squares on Start:
-$start.on('click', function(){
+function initializeGame() {
+    console.log("initializing game...")
+    winningSquares = genWinningSquares()
     for(var i = 0; i < winningSquares.length; i += 1) {
         $squares.eq(winningSquares[i]).addClass('blue')
     }
@@ -54,11 +63,9 @@ $start.on('click', function(){
             $squares.eq(winningSquares[i]).addClass('white')
         }
         $('#instructions').text('Good Luck!')
-
         //+/- score and clicks accordingly
         $grid.on('click', '.square', function(){
-            // while ($clicks.text() >=== - 1) {
-            // }
+            // only while there are still clicks left:
             if(clicksRemaining()) {
                 $clicks.text(Number($clicks.text()) - 1)
                 if ($(this).hasClass('blue')){
@@ -68,26 +75,47 @@ $start.on('click', function(){
                 }
                 else {
                     console.log("Nope")
-                    $(this).css('backgroundColor', 'black')
+                    $(this).addClass('black')
                     $score.text(Number($score.text()) - 1)
                 }
+            //end of Player1's turn
             } else {
                 $('.square').off()
                 $('#instructions').text('Good job ' + $name.text() + '! Your score is ' + $score.text() + '. \n Next Player!')
-                $name.text($name.text() + ': ' + $score.text())
-                $form.show().text('')
-                $playerName.focus()
-                $('.square').css('backgroundColor', 'white')
+                $('#score-board').append($name.text() + ': ' + $score.text())
+                $form.show()
+                $('#player-name').val('').focus()
+                $('.square').removeClass('blue').removeClass('black')
+                $start.one('click', initializeGame)
             }
         })
-    }, 2500)
-})
+    }, 2000)
+}
+
+$start.one('click', initializeGame)
 
 function clicksRemaining() {
     return Boolean(Number($clicks.text()))
 }
 
+// clicksLeft = 7
 
+// boxClickHandler () {
+//     while clicksLeft > 0
+//         if clicked box is one of the random ones {
+//             box is blue
+//             score +1
+//         } else {
+//             box is black
+//         }
+//     }
+//     player 1 score = score
+// }
+
+
+// add event listeners ('click', boxClickHandler) {
+
+// }
 
 
 
