@@ -5,6 +5,8 @@ var $form = $('#form')
 var $topRow = $('#top-row')
 var winningSquares;
 var $scoreBoard = $('#score-board')
+var gridSize = 25
+var level = 1
 
 var players = {
     player1: {name: '', score: 0},
@@ -16,8 +18,8 @@ var game = {
     gameOver: false
 }
 
-//generate 25 squares:
-for (var i = 0; i < 25; i += 1) {
+//generate 25 or 49 squares:
+for (var i = 0; i < gridSize; i += 1) {
     $grid.append('<div class="square" id=' +i+ '></square>')
 }
 
@@ -36,7 +38,7 @@ function randomInt(hi){
 function genWinningSquares() {
     var arr = [] 
     while (arr.length < 7 ) {
-        var randomNum = randomInt(25)
+        var randomNum = randomInt(gridSize)
         if (arr.indexOf(randomNum) > -1) continue;
         arr[arr.length] = randomNum;
     }
@@ -50,6 +52,7 @@ $score.text(0)
 $clicks.text(7)
 
 //show player name after he inputs his name
+$playerName.focus()
 $form.on('submit', function(evt){
     evt.preventDefault()
     $name.text($playerName.val())
@@ -59,7 +62,7 @@ $form.on('submit', function(evt){
 //turn 7 random squares blue on Start:
 function initializeGame() {
     //Alert if no name is entered
-    if ($playerName.val() === "") { 
+    if ($name.text() === "") { 
         $('#instructions').text('Please submit your name!')
         $playerName.focus()
         $start.one('click', initializeGame)
@@ -114,6 +117,7 @@ function initializeGame() {
                     $name.hide()
                     $grid.off('click', '.square')
                     $('#instructions').html('')
+                    $('#grid').hide()
                     if (game.currentPlayer.score > players.player1.score) {
                         $name.show().html('Woohoo ' + game.currentPlayer.name + ', You are smarter!')
                     }
@@ -123,6 +127,13 @@ function initializeGame() {
                     else {
                         $name.show().html('Woohoo ' + players.player1.name + ', You are smarter!')
                     }
+                    $('#grid').show()
+                    $form.show()
+                    $('#player-name').val('').focus()
+                    $('.square').removeClass('blue').removeClass('black').removeClass('white')
+                    $score.text(0)
+                    $clicks.text(7)
+                    $start.removeClass('gray')
                 }
             })
         }, 1500)
