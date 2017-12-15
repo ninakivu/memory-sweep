@@ -1,9 +1,9 @@
-![image - logo of the game] (./memory-sweep-logo.png)
+![image - logo of the game](./memory-sweep-logo.png)
 
 
-##Train your brain, improve your working memory & get smarter each day!
+## Train your brain, improve your working memory & get smarter each day!
 
-![screenshot] (./screenshot.png)
+![screenshot](./screenshot.png)
 
 Try to outsmart your friends, coworkers and even your boss.
 
@@ -11,15 +11,15 @@ Try to outsmart your friends, coworkers and even your boss.
 When you are ready, click on the Start button. Observe the grid, some squares will get blue for a little while. Click on the squares that you think were blue. For each click on a correct square you get 1 point, for each wrong one or missed one, you loose 1.
 Each player will have same number of clicks fr each level. 
 
-Play Memory Sweep right [HERE] (http://gh-pages/ninakivu.com).
+Play Memory Sweep right [HERE] (https://ninakivu.github.io/memory-sweep/).
 
 ---
 
-###Development & Technologies:
+### Development & Technologies:
 Memory Sweep was build by using HTML, CSS, JavaScript and the jQuery library.
 
 
-###User Stories:
+### User Stories:
 - when I click start, I want to see some squares get highlighted
 - after some seconds, blue squares should be gone
 - I understamd the game logic at the moment I see it
@@ -34,7 +34,7 @@ Memory Sweep was build by using HTML, CSS, JavaScript and the jQuery library.
 - comparison between the scores determine the winner
 
 
-###Dream Features:
+### Dream Features:
 
 - more levels with increasing difficulty 
 - bigger grid with higher levels

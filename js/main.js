@@ -2,22 +2,21 @@ var $grid = $('#grid')
 var $name = $('#name')
 var $playerName = $('#player-name')
 var $form = $('#form')
-var $topRow = $('#top-row')
 var winningSquares;
 var $scoreBoard = $('#score-board')
 var gridSize = 5
+var $start = $('#start')
 
 var players = {
     player1: {name: '', score: 0},
     player2: {name: '', score: 0}
 }
-
 var game = {
     currentPlayer: players.player1,
     gameOver: false
 }
 
-function setGrid () {
+function setGrid() {
     //remove old squares:
     ('.square').remove
     //create grid:
@@ -31,11 +30,6 @@ function setGrid () {
         $grid.append('<div class="square" id=' +i+ '></square>')
     }
 }
-
-//appends start button
-$topRow.append('<div class="row" id="start">Start!</div>')
-
-var $start = $('#start')
 
 //generate a random number:
 function randomInt(hi){
@@ -68,9 +62,9 @@ $form.on('submit', function(evt){
     $form.hide()
 })
 
-setGrid()
 //turn 7 random squares blue on Start:
 function initializeGame() {
+    setGrid()
     //Alert if no name is entered
     if ((players.player1.name === '') || ((players.player1.score !== 0) && (players.player2.name === ''))){ 
         $('#instructions').text('Please submit your name!')
