@@ -3,7 +3,9 @@ var $name = $('#name')
 var $playerName = $('#player-name')
 var $form = $('#form')
 var winningSquares;
-var $scoreBoard = $('#score-board')
+var $playerOne = $('#player-one')
+var $playerTwo = $('#player-two')
+
 var gridSize = 5
 var $start = $('#start')
 
@@ -15,6 +17,7 @@ var game = {
     currentPlayer: players.player1,
     gameOver: false
 }
+var level = 1
 
 function setGrid() {
     //remove old squares:
@@ -57,8 +60,8 @@ $clicks.text(7)
 $playerName.focus()
 $form.on('submit', function(evt){
     evt.preventDefault()
-    $name.text($playerName.val())
     game.currentPlayer.name = $playerName.val()
+    $name.text(game.currentPlayer.name)
     $form.hide()
 })
 
@@ -73,9 +76,9 @@ function initializeGame() {
         return
     } else {
         //Begin the game:
+        $name.html(game.currentPlayer.name)
         $('#instructions').text('Memorize the highlighted tiles. Remember their positions when gone.')
         $start.css('backgroundColor', '#999999')
-        console.log("initializing game...")
         winningSquares = genWinningSquares()
         for(var i = 0; i < winningSquares.length; i += 1) {
             $('.square').eq(winningSquares[i]).addClass('blue')
@@ -103,21 +106,23 @@ function initializeGame() {
                     }
                 //Next Player:
                 } else if (game.currentPlayer !== players.player2){
-                    game.currentPlayer = players.player2
                     $grid.off('click', '.square')
-                    $('#instructions').html('Good job ' + $name.text() + '! Your score is ' + $score.text() + '. '+'<br />' + 'Next Player!')
-                    $scoreBoard.append($name.text() + ': ' + $score.text() + '<br/>')
-                    $form.show()
-                    $('#player-name').val('').focus()
+                    $('#instructions').html('Good job ' + game.currentPlayer.name + '! Your score is ' + game.currentPlayer.score + '. '+'<br />' + 'Next Player!')
+                    $playerOne.html(players.player1.name + ': ' + players.player1.score)
+                    if (players.player2.name === '') {
+                        $form.show()
+                        $('#player-name').val('').focus()
+                    }
                     $('.square').removeClass('blue').removeClass('black').removeClass('white')
                     $score.text(0)
                     $clicks.text(7)
                     $start.css('backgroundColor', '#60b0f4')
+                    game.currentPlayer = players.player2
                     $start.one('click', initializeGame)
                 }
                 //GAME OVER - next level:
                 else {
-                    $scoreBoard.append($name.text() + ': ' + $score.text() + '<br/>')
+                    $playerTwo.html(players.player2.name + ': ' + players.player2.score)
                     $name.hide()
                     $grid.off('click', '.square')
                     $('#instructions').html('')
@@ -131,11 +136,13 @@ function initializeGame() {
                     else {
                         $name.show().html('Woohoo ' + players.player1.name + ', You are smarter!')
                     }
+                    game.currentPlayer = players.player1
                     $('#grid').show()
                     $('.square').removeClass('blue').removeClass('black').removeClass('white')
                     $score.text(0)
                     $clicks.text(7)
-                    $start.css('backgroundColor', '#60b0f4' ).text('level 2')
+                    level = level + 1
+                    $start.css('backgroundColor', '#60b0f4' ).text('Level '+ (level))
                     gridSize = gridSize + 1
                     setGrid()
                     $start.one('click', initializeGame)
