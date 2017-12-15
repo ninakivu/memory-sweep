@@ -11,7 +11,7 @@ Try to outsmart your friends, coworkers and even your boss.
 When you are ready, click on the Start button. Observe the grid, some squares will get blue for a little while. Click on the squares that you think were blue. For each click on a correct square you get 1 point, for each wrong one or missed one, you loose 1.
 Each player will have same number of clicks fr each level. 
 
-Play Memory Sweep right [HERE] (https://ninakivu.github.io/memory-sweep/).
+Play Memory Sweep right [HERE](https://ninakivu.github.io/memory-sweep/).
 
 ---
 
