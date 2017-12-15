@@ -42,3 +42,6 @@ Memory Sweep was build by using HTML, CSS, JavaScript and the jQuery library.
 - compare yourself with people your age, your profession and your gender
 - alerts each time before a new level/new obsacle is introduced to the game
 - global scoreboards
+
+
+Logo made with tool: https://logomakr.com/
