@@ -18,7 +18,7 @@ var game = {
 
 function setGrid() {
     //remove old squares:
-    ('.square').remove
+    $('.square').remove()
     //create grid:
     $grid.css({
         width: (gridSize * 100) + (2 * gridSize),
@@ -138,6 +138,7 @@ function initializeGame() {
                     $start.css('backgroundColor', '#60b0f4' ).text('level 2')
                     gridSize = gridSize + 1
                     setGrid()
+                    $start.one('click', initializeGame)
                 }
             })
         }, 1500)
