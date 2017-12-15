@@ -5,8 +5,7 @@ var $form = $('#form')
 var $topRow = $('#top-row')
 var winningSquares;
 var $scoreBoard = $('#score-board')
-var gridSize = 25
-var level = 1
+var gridSize = 5
 
 var players = {
     player1: {name: '', score: 0},
@@ -18,27 +17,36 @@ var game = {
     gameOver: false
 }
 
-//generate 25 or 49 squares:
-for (var i = 0; i < gridSize; i += 1) {
-    $grid.append('<div class="square" id=' +i+ '></square>')
+function setGrid () {
+    //remove old squares:
+    ('.square').remove
+    //create grid:
+    $grid.css({
+        width: (gridSize * 100) + (2 * gridSize),
+        height: (gridSize * 100) + (2 * gridSize),
+    })
+    
+    //generate n*n squares:
+    for (var i = 0; i < Math.pow(gridSize, 2); i += 1) {
+        $grid.append('<div class="square" id=' +i+ '></square>')
+    }
 }
 
 //appends start button
 $topRow.append('<div class="row" id="start">Start!</div>')
 
-var $squares = $('.square')
 var $start = $('#start')
 
-//generate a random number 0-24:
+//generate a random number:
 function randomInt(hi){
     return Math.floor(Math.random() * hi)
 }
 
-//generate an array with 7 unique random numbers:
+//generate an array with unique random numbers:
 function genWinningSquares() {
     var arr = [] 
     while (arr.length < 7 ) {
-        var randomNum = randomInt(gridSize)
+        var randomNum = randomInt(Math.pow(gridSize, 2))
         if (arr.indexOf(randomNum) > -1) continue;
         arr[arr.length] = randomNum;
     }
@@ -59,10 +67,12 @@ $form.on('submit', function(evt){
     game.currentPlayer.name = $playerName.val()
     $form.hide()
 })
+
+setGrid()
 //turn 7 random squares blue on Start:
 function initializeGame() {
     //Alert if no name is entered
-    if ($name.text() === "") { 
+    if ((players.player1.name === '') || ((players.player1.score !== 0) && (players.player2.name === ''))){ 
         $('#instructions').text('Please submit your name!')
         $playerName.focus()
         $start.one('click', initializeGame)
@@ -70,16 +80,16 @@ function initializeGame() {
     } else {
         //Begin the game:
         $('#instructions').text('Memorize the highlighted tiles. Remember their positions when gone.')
-        $start.addClass('gray')
+        $start.css('backgroundColor', '#999999')
         console.log("initializing game...")
         winningSquares = genWinningSquares()
         for(var i = 0; i < winningSquares.length; i += 1) {
-            $squares.eq(winningSquares[i]).addClass('blue')
+            $('.square').eq(winningSquares[i]).addClass('blue')
         }
         //change color to blue for 3 seconds:
         setTimeout(function(){
             for(var i = 0; i < winningSquares.length; i += 1) {
-                $squares.eq(winningSquares[i]).addClass('white')
+                $('.square').eq(winningSquares[i]).addClass('white')
             }
             $('#instructions').text('Good Luck!')
             //adjust score and clicks accordingly
@@ -97,7 +107,7 @@ function initializeGame() {
                         $score.text(Number($score.text()) - 1)
                         game.currentPlayer.score--
                     }
-                //Game Over, Next Player:
+                //Next Player:
                 } else if (game.currentPlayer !== players.player2){
                     game.currentPlayer = players.player2
                     $grid.off('click', '.square')
@@ -108,10 +118,10 @@ function initializeGame() {
                     $('.square').removeClass('blue').removeClass('black').removeClass('white')
                     $score.text(0)
                     $clicks.text(7)
-                    $start.removeClass('gray')
+                    $start.css('backgroundColor', '#60b0f4')
                     $start.one('click', initializeGame)
                 }
-                //GAME OVER:
+                //GAME OVER - next level:
                 else {
                     $scoreBoard.append($name.text() + ': ' + $score.text() + '<br/>')
                     $name.hide()
@@ -128,12 +138,12 @@ function initializeGame() {
                         $name.show().html('Woohoo ' + players.player1.name + ', You are smarter!')
                     }
                     $('#grid').show()
-                    $form.show()
-                    $('#player-name').val('').focus()
                     $('.square').removeClass('blue').removeClass('black').removeClass('white')
                     $score.text(0)
                     $clicks.text(7)
-                    $start.removeClass('gray')
+                    $start.css('backgroundColor', '#60b0f4' ).text('level 2')
+                    gridSize = gridSize + 1
+                    setGrid()
                 }
             })
         }, 1500)
